@@ -3,23 +3,29 @@ export class CheckWin{
         this.player = player;
     }
 
-    checkWIn(assign) {
-        if(assign[0] == player && assign[1] == player && assign[2] == player){
+    checkWin(assign) {
+        if(assign[0] == this.player && assign[1] == this.player && assign[2] == this.player){
+            console.log('yeyeaysy')
             return true;
         }
-        if(assign[3] == player && assign[4] == player && assign[5] == player){
+        if(assign[3] == this.player && assign[4] == this.player && assign[5] == this.player){
+            console.log('yeyeaysy')
             return true;
         }
-        if(assign[6] == player && assign[7] == player && assign[8] == player){
+        if(assign[6] == this.player && assign[7] == this.player && assign[8] == this.player){
+            console.log('yeyeaysy')
             return true;
         }
-        if(assign[0] == player && assign[4] == player && assign[8] == player){
+        if(assign[0] == this.player && assign[4] == this.player && assign[8] == this.player){
+            console.log('yeyeaysy')
             return true;
         }
-        if(assign[2] == player && assign[4] == player && assign[6] == player){
+        if(assign[2] == this.player && assign[4] == this.player && assign[6] == this.player){
+            console.log('yeyeaysy')
             return true;
         }
-        console.log('not yet');
+        console.log(assign)
+        console.log('lah')
         return false;
     }
 }
