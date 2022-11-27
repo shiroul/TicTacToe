@@ -1,0 +1,23 @@
+.header{
+    padding: 60px;
+    text-align: center;
+    background: #1abc9c;
+    color: white;
+    font-size: 30px;
+}
+
+.myButton{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding-top: 100px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+    padding-left: 50px;
+
+}
+
+#btn1, #btn2, #btn3, #btn4, #btn5, #btn6, #btn7, #btn8, #btn9{
+    padding: 50px;
+    font-size: px;
+    text-align: center
+}
