@@ -1,3 +1,7 @@
+import {
+    dumbCPU
+} from './DumbCPU.js'
+
 let turn = 'O'
 let win = 0
 let board = Array.from(document.getElementsByClassName('box'))
@@ -27,12 +31,15 @@ function restart() {
     win = 0
 }
 
-function checkWining(){
+let banana = 0
+
+function checkWining(mark){
     winningTurn.forEach(element => {
-        if(boardValue[element[0]] == turn && boardValue[element[1]] == turn && boardValue[element[2]] == turn){
+        if(boardValue[element[0]] == mark && boardValue[element[1]] == mark && boardValue[element[2]] == mark){
             win = 1;
             return 1
         }
+        banana+=1
     });
 }
 
@@ -42,20 +49,18 @@ function boxClicked(e) {
         if(!boardValue[id]){
             boardValue[id] = turn;
             e.target.innerText = turn;
-            if(checkWining() == 1){
-                console.log('banana')
-            }else{
-                console.log('bunana')
-            }
-            console.log('kontol')
+            console.log(e)
+            checkWining(turn)
             if(turn == 'O'){
-                turn = 'X';
-                document.getElementById("playerTurn").innerHTML = turn + ' TURN';
+                dumbCPU(winningTurn, boardValue)
+                checkWining('X')
+                // turn = 'X';
+                // document.getElementById("playerTurn").innerHTML = turn + ' TURN';
                 return
             }
-            turn = 'O';
-            document.getElementById("playerTurn").innerHTML = turn + ' TURN';
-            return
+            // turn = 'O';
+            // document.getElementById("playerTurn").innerHTML = turn + ' TURN';
+            // return
         } 
     }
 }
