@@ -6,7 +6,7 @@ let turn = 'O'
 let win = 0
 let board = Array.from(document.getElementsByClassName('box'))
 let boardValue = new Array(9).fill(null);
-let winningTurn = [
+export let winningTurn = [
     [0,1,2], 
     [0,4,8], 
     [0,3,6],
@@ -27,20 +27,18 @@ function restart() {
     board.forEach(element => {
         element.innerText = ''
     });
+    document.getElementById("playerTurn").innerHTML = 'TIC TAC TOE';
     turn = 'O'
     win = 0
 }
 
-let banana = 0
-
-function checkWining(mark){
-    winningTurn.forEach(element => {
-        if(boardValue[element[0]] == mark && boardValue[element[1]] == mark && boardValue[element[2]] == mark){
-            win = 1;
+export function checkWinning(boardValue, mark){
+    for(let i=0;i<8;i++){
+        if(boardValue[winningTurn[i][0]] == mark && boardValue[winningTurn[i][1]] == mark && boardValue[winningTurn[i][2]] == mark){
             return 1
         }
-        banana+=1
-    });
+    }
+    return 0
 }
 
 function boxClicked(e) {
@@ -49,11 +47,12 @@ function boxClicked(e) {
         if(!boardValue[id]){
             boardValue[id] = turn;
             e.target.innerText = turn;
-            console.log(e)
-            checkWining(turn)
+            if(checkWinning(boardValue, turn)){
+                win = 1
+                return
+            }
             if(turn == 'O'){
-                dumbCPU(winningTurn, boardValue)
-                checkWining('X')
+                dumbCPU(boardValue)
                 // turn = 'X';
                 // document.getElementById("playerTurn").innerHTML = turn + ' TURN';
                 return
@@ -61,8 +60,8 @@ function boxClicked(e) {
             // turn = 'O';
             // document.getElementById("playerTurn").innerHTML = turn + ' TURN';
             // return
-        } 
-    }
+        }
+    } 
 }
 
 startGame()
