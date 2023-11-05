@@ -1,29 +1,39 @@
 import {
-    checkWinning,
-    winningTurn
+    checkWinning
 } from './Logic.js'
 
-let cpuDumb = 0
+let cpuSmart = 0
+let turn = 'O'
+
+export function changeDiffBot(x){
+    if(x){
+        cpuSmart = 1
+
+        return
+    }
+    cpuSmart = 0
+}
 
 export function dumbCPU(boardValue){
     let temp
-    if(cpuDumb){
+    if(cpuSmart){
+        turn = 'O'
+        temp = smartCPU(boardValue)
+        boardValue[temp] = turn
+        document.getElementById(temp).innerHTML = turn;
+    }else{
         while(true){
             temp = Math.floor(Math.random() * 9);
             
             if (!boardValue[temp]){
-                boardValue[temp] = 'X'
-                document.getElementById(temp).innerHTML = 'X';
-                if(checkWinning(boardValue, 'X')){
+                boardValue[temp] = turn
+                document.getElementById(temp).innerHTML = turn;
+                if(checkWinning(boardValue, turn)){
                     win = 1
                 }
                 return
             }
         }
-    }else{
-        temp = smartCPU(boardValue)
-        boardValue[temp] = 'X'
-        document.getElementById(temp).innerHTML = 'X';
     }
 }
 
@@ -42,45 +52,55 @@ export function smartCPU(boardValue){
     let score
 
     temp.forEach(element => {
-        boardValue[element] = 'X'
-        score = minimax(count, boardValue, false)
+        turn = 'O'
+        boardValue[element] = turn
+        score = minimax(count, 0, boardValue, false)
         if(score>bestScore){
             bestScore = score
             bestMove = element
         }
         boardValue[element] = null
     });
+    turn = 'O'
+
     return bestMove
 }
 
-function minimax(i, boardValue, maximaze){
-    if(checkWinning(boardValue, 'X')){
-        return 1
+function minimax(index, depth, boardValue, maximaze){
+
+    if(checkWinning(boardValue, turn)){
+        if(turn == 'O'){
+            return 10-depth
+        }
+        return -10+depth
     }
-    
-    if(i == 0){
+
+    if(index==0){
         return 0
     }
 
     if(maximaze){
-        let maxScore = -Infinity
+        let bestScore = -Infinity
         for(let i=0;i<9;i++){
             if(!boardValue[i]){
-                boardValue[i] = 'X'
-                maxScore = Math.max(maxScore, minimax(i-1, boardValue, false))
+                turn ='O'
+                boardValue[i] = 'O'
+                let score = minimax(index-1, depth+1, boardValue, false)
+                bestScore = Math.max(bestScore, score)
                 boardValue[i] = null
             }
         }
-        return maxScore
+        return bestScore
     }
-    let minScore = Infinity
+    let bestScore = Infinity
     for(let i=0;i<9;i++){
         if(!boardValue[i]){
-            boardValue[i] = 'O'
-            minScore = Math.min(minScore, minimax(i-1, boardValue, true))
+            turn = 'X'
+            boardValue[i] = 'X'
+            let score = minimax(index-1, depth+1, boardValue, true)
+            bestScore = Math.min(bestScore, score)
             boardValue[i] = null
         }
     }
-    return minScore
-
+    return bestScore
 }

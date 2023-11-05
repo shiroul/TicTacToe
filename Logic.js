@@ -1,11 +1,18 @@
 import {
-    dumbCPU
+    dumbCPU,
+    changeDiffBot
 } from './DumbCPU.js'
 
-let turn = 'O'
+let turn = 'X'
 let win = 0
 let board = Array.from(document.getElementsByClassName('box'))
 let boardValue = new Array(9).fill(null);
+// let boardValue = [
+//     'X', 'O', 'O', 
+//     'X', 'O', null, 
+//     'X', null, null]
+
+
 export let winningTurn = [
     [0,1,2], 
     [0,4,8], 
@@ -21,15 +28,33 @@ const startGame = () => {
 }
 
 restartButton.addEventListener('click', restart)
+DumbBot.addEventListener('click', dumbBot)
+SmartBot.addEventListener('click', smartBot)
+
+function dumbBot(){
+    changeDiffBot(0)
+    startGame()
+}
+
+function smartBot(){
+    changeDiffBot(1)
+    startGame()
+}
+
 
 function restart() {
+    // boardValue = Array(9).fill(null);
+    // board.forEach(element => {
+    //     element.innerText = ''
+    // });
+    // document.getElementById("playerTurn").innerHTML = 'TIC TAC TOE';
+    // turn = 'O'
+    // win = 0
+    for(let i=0;i<9;i++){
+        document.getElementById(i).innerHTML = '';
+    }
     boardValue = Array(9).fill(null);
-    board.forEach(element => {
-        element.innerText = ''
-    });
-    document.getElementById("playerTurn").innerHTML = 'TIC TAC TOE';
-    turn = 'O'
-    win = 0
+    dumbCPU(boardValue)
 }
 
 export function checkWinning(boardValue, mark){
@@ -45,13 +70,13 @@ function boxClicked(e) {
     if(win==0){
         const id = e.target.id
         if(!boardValue[id]){
-            boardValue[id] = turn;
-            e.target.innerText = turn;
-            if(checkWinning(boardValue, turn)){
+            boardValue[id] = 'X';
+            e.target.innerText = 'X';
+            if(checkWinning(boardValue, 'X')){
                 win = 1
                 return
             }
-            if(turn == 'O'){
+            if(turn == 'X'){
                 dumbCPU(boardValue)
                 // turn = 'X';
                 // document.getElementById("playerTurn").innerHTML = turn + ' TURN';
