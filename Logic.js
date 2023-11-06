@@ -44,6 +44,7 @@ function toggle(){
 }
 
 function restart() {
+    win = 0
     document.getElementById("restartButton").innerHTML = "RESTART";
     for(let i=0;i<9;i++){
         document.getElementById(i).innerHTML = '';
