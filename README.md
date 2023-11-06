@@ -58,5 +58,6 @@ Before running the project, ensure you have a modern web browser that supports H
 The Minimax algorithm is a decision-making algorithm used in two-player games like Tic-Tac-Toe. It tries to minimize the possible loss for a worst-case scenario while maximizing the potential gain. The algorithm explores all possible moves and outcomes to determine the best move for the AI opponent.
 
 ## License
-
 This project is in the public domain, free for anyone to use, modify, and distribute without any restrictions. You may treat it as if it has no license at all.
+
+
