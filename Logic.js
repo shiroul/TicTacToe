@@ -1,17 +1,13 @@
 import {
-    dumbCPU,
+    cpuMove,
     changeDiffBot
 } from './DumbCPU.js'
 
 let turn = 'X'
 let win = 0
 let board = Array.from(document.getElementsByClassName('box'))
+let toggleSwitch = false
 let boardValue = new Array(9).fill(null);
-// let boardValue = [
-//     'X', 'O', 'O', 
-//     'X', 'O', null, 
-//     'X', null, null]
-
 
 export let winningTurn = [
     [0,1,2], 
@@ -24,37 +20,36 @@ export let winningTurn = [
     [6,7,8]]
 
 const startGame = () => {
+    dumbLabel.style.display = "block";
+    smartLabel.style.display = "none";
+    cpuMove(boardValue)
     board.forEach(box => box.addEventListener('click', boxClicked))
 }
 
 restartButton.addEventListener('click', restart)
-DumbBot.addEventListener('click', dumbBot)
-SmartBot.addEventListener('click', smartBot)
+toggleInput.addEventListener("change", toggle)
 
-function dumbBot(){
-    changeDiffBot(0)
-    startGame()
-}
-
-function smartBot(){
+function toggle(){
+    if(toggleSwitch){
+        dumbLabel.style.display = "block";
+        smartLabel.style.display = "none";
+        changeDiffBot(0)
+        toggleSwitch = !toggleSwitch
+        return
+    }
+    smartLabel.style.display = "block";
+    dumbLabel.style.display = "none";
     changeDiffBot(1)
-    startGame()
+    toggleSwitch = !toggleSwitch
 }
-
 
 function restart() {
-    // boardValue = Array(9).fill(null);
-    // board.forEach(element => {
-    //     element.innerText = ''
-    // });
-    // document.getElementById("playerTurn").innerHTML = 'TIC TAC TOE';
-    // turn = 'O'
-    // win = 0
+    document.getElementById("restartButton").innerHTML = "RESTART";
     for(let i=0;i<9;i++){
         document.getElementById(i).innerHTML = '';
     }
     boardValue = Array(9).fill(null);
-    dumbCPU(boardValue)
+    cpuMove(boardValue)
 }
 
 export function checkWinning(boardValue, mark){
@@ -73,20 +68,16 @@ function boxClicked(e) {
             boardValue[id] = 'X';
             e.target.innerText = 'X';
             if(checkWinning(boardValue, 'X')){
+                document.getElementById("Tictactoe").innerHTML = "PLAYER WIN!";
                 win = 1
                 return
             }
-            if(turn == 'X'){
-                dumbCPU(boardValue)
-                // turn = 'X';
-                // document.getElementById("playerTurn").innerHTML = turn + ' TURN';
-                return
-            }
-            // turn = 'O';
-            // document.getElementById("playerTurn").innerHTML = turn + ' TURN';
-            // return
+            cpuMove(boardValue)
         }
     } 
 }
 
+export function changeWin(){
+    win = 1
+}
 startGame()

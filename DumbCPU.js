@@ -1,5 +1,6 @@
 import {
-    checkWinning
+    checkWinning,
+    changeWin
 } from './Logic.js'
 
 let cpuSmart = 0
@@ -14,7 +15,7 @@ export function changeDiffBot(x){
     cpuSmart = 0
 }
 
-export function dumbCPU(boardValue){
+export function cpuMove(boardValue){
     let temp
     if(cpuSmart){
         turn = 'O'
@@ -29,6 +30,7 @@ export function dumbCPU(boardValue){
                 boardValue[temp] = turn
                 document.getElementById(temp).innerHTML = turn;
                 if(checkWinning(boardValue, turn)){
+                    document.getElementById("Tictactoe").innerHTML = "CPU WIN!";
                     win = 1
                 }
                 return
@@ -63,6 +65,11 @@ export function smartCPU(boardValue){
     });
     turn = 'O'
 
+    if(bestScore == 10){
+        changeWin()
+        document.getElementById("Tictactoe").innerHTML = "CPU WON!";
+        document.getElementById("restartButton").innerHTML = "TRY AGAIN?";
+    }
     return bestMove
 }
 
