@@ -20,7 +20,7 @@ This project is a simple implementation of the Tic-Tac-Toe game with an AI oppon
 
 ## Demo
 
-You can play a live demo of the game [here](https://github.com/shiroul/TicTacToe.git).
+You can play a live demo of the game [here](https://shiroul.github.io/TicTacToe/).
 
 ## Features
 
